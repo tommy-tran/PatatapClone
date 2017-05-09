@@ -2,19 +2,37 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="assets/css/circle.css">
 	<script type="text/javascript" src="assets/js/lib/paper-full.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.3/howler.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/circle.css">
 	<!-- Define inlined PaperScript associate it with myCanvas -->
 	<script type="text/paperscript" canvas="myCanvas">
-		// Create a Paper.js Path to draw a line into it:
-		var path = new Path();
-		// Give the stroke a color
-		path.strokeColor = 'red';
-		var start = new Point(50, 100);
-		// Move to start and draw a line from there
-		path.moveTo(start);
-		// Note the plus operator on Point objects.
-		// PaperScript does that for us, and much more!
+
+	var sound = new Howl({
+ 	 src: ['assets/sounds/bubbles.mp3']
+	});
+
+	var circles = [];
+	function onKeyDown(event) {
+	sound.play();
+	var maxPoint = new Point(view.size.width, view.size.height);
+	var randomPoint = Point.random();
+	var point = maxPoint * randomPoint;
+	var newCircle = new Path.Circle(point, 75);
+	newCircle.fillColor = "orange";
+	circles.push(newCircle);
+	}
+
+
+	function onFrame(event) {
+	for(var i = 0; i < circles.length; i++) {
+		circles[i].fillColor.hue += 1;
+		circles[i].scale(.980);
+	}
+	}
+
+
+
 	</script>
 </head>
 <body>
